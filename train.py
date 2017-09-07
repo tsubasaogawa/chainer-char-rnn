@@ -103,7 +103,6 @@ for i in xrange(jump * n_epochs):
         print '{}/{}, train_loss = {}, time = {:.2f}'.format((i+1)/bprop_len, jump, accum_loss.data / bprop_len, now-cur_at)
         cur_at = now
 
-        optimizer.zero_grads()
         accum_loss.backward()
         accum_loss.unchain_backward()  # truncate
         if args.gpu >= 0:
@@ -111,7 +110,6 @@ for i in xrange(jump * n_epochs):
         else:
             accum_loss = Variable(np.zeros((), dtype=np.float32))
 
-        optimizer.clip_grads(grad_clip)
         optimizer.update()
 
     if (i + 1) % 10000 == 0:

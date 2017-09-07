@@ -1,4 +1,5 @@
 import numpy as np
+import chainer
 from chainer import Variable, Chain
 import chainer.functions as F
 import chainer.links as L
@@ -7,15 +8,15 @@ class CharRNN(Chain):
 
     def __init__(self, n_vocab, n_units):
         super(CharRNN, self).__init__(
-            embed = F.EmbedID(n_vocab, n_units),
+            embed = L.EmbedID(n_vocab, n_units),
             l1_x = L.Linear(n_units, 4*n_units),
             l1_h = L.Linear(n_units, 4*n_units),
             l2_h = L.Linear(n_units, 4*n_units),
             l2_x = L.Linear(n_units, 4*n_units),
             l3   = L.Linear(n_units, n_vocab),
         )
-        for param in self.parameters:
-            param[:] = np.random.uniform(-0.08, 0.08, param.shape)
+        # for param in self.parameters:
+        #     param[:] = np.random.uniform(-0.08, 0.08, param.shape)
 
     def forward_one_step(self, x_data, y_data, state, train=True, dropout_ratio=0.5):
         x = Variable(x_data, volatile=not train)

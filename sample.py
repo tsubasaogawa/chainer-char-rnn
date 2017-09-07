@@ -7,7 +7,7 @@ import cPickle as pickle
 import codecs
 
 import numpy as np
-from chainer import cuda, Variable, FunctionSet
+from chainer import cuda, Variable, Chain
 import chainer.functions as F
 from CharRNN import CharRNN, make_initial_state
 

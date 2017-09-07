@@ -9,7 +9,7 @@ import os
 import codecs
 
 import numpy as np
-from chainer import cuda, Variable, FunctionSet, optimizers
+from chainer import cuda, Variable, Chain, optimizers
 import chainer.functions as F
 from CharRNN import CharRNN, make_initial_state
 

@@ -1,9 +1,9 @@
 import numpy as np
-from chainer import Variable, FunctionSet
+from chainer import Variable, Chain
 import chainer.functions as F
 import chainer.links as L
 
-class CharRNN(FunctionSet):
+class CharRNN(Chain):
 
     def __init__(self, n_vocab, n_units):
         super(CharRNN, self).__init__(

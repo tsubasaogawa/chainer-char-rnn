@@ -7,16 +7,16 @@ import chainer.links as L
 class CharRNN(Chain):
 
     def __init__(self, n_vocab, n_units):
-        super(CharRNN, self).__init__(
-            embed = L.EmbedID(n_vocab, n_units),
-            l1_x = L.Linear(n_units, 4*n_units),
-            l1_h = L.Linear(n_units, 4*n_units),
-            l2_h = L.Linear(n_units, 4*n_units),
-            l2_x = L.Linear(n_units, 4*n_units),
-            l3   = L.Linear(n_units, n_vocab),
-        )
-        # for param in self.parameters:
-        #     param[:] = np.random.uniform(-0.08, 0.08, param.shape)
+        super(CharRNN, self).__init__()
+        with self.init_scope():
+            self.embed = L.EmbedID(n_vocab, n_units)
+            self.l1_x = L.Linear(n_units, 4*n_units)
+            self.l1_h = L.Linear(n_units, 4*n_units)
+            self.l2_h = L.Linear(n_units, 4*n_units)
+            self.l2_x = L.Linear(n_units, 4*n_units)
+            self.l3   = L.Linear(n_units, n_vocab)
+        for param in self.params():
+            param.data[...] = np.random.uniform(-0.08, 0.08, param.data.shape)
 
     def forward_one_step(self, x_data, y_data, state, train=True, dropout_ratio=0.5):
         with chainer.using_config('enable_backprop', True):
